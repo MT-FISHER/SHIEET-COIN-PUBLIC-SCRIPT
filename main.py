@@ -50,10 +50,14 @@ def printAllCoins():
 
 #Get the coin price by coingecko id using API
 def getCoinPrice(crypto_id):
-    dict_output = (cg.get_price(ids=crypto_id, vs_currencies='usd'))
-    price = dict_output[crypto_id]['usd']
-    return format(price, '.20f')
-
+    try:
+        dict_output = (cg.get_price(ids=crypto_id, vs_currencies='usd'))
+        price = dict_output[crypto_id]['usd']
+        return format(price, '.20f')
+    except:
+        print("ERROR: either coin does not exist or coin id entered is incorrect\n")
+    
+    
 #Get the difference in price from bought to current for coins
 def getCoinPriceDifference(current_price, price_bought):
     return format((float(current_price) - float(price_bought)),'.20f')
@@ -104,6 +108,7 @@ def menu():
     print("2 - Get All Coin Info\n")
     print("3 - Get Price Details Of Investment\n")
     print("4 - Get Basic Price Details Of Investment\n")
+    print("5 - Check Coin Price on CoinGecko\n")
     print("0 - Exit\n")
 
 #---------------------------------------------------------------MAIN----------------------------------------------------------------------------#
@@ -111,7 +116,10 @@ def menu():
 
 read_file(filename)
 user_input = -1
+coin_id_input = -1
 run = False
+
+#Menu loop
 while (user_input != '0'):
     if (run == False):
         print("\n\n-----------------------SHIEET COIN SCRIPT-----------------------Created By BitByBit\n\n")
@@ -122,20 +130,39 @@ while (user_input != '0'):
     user_input = input("Please select your option: ")
     clear()
     print('\n\n')
+    
+    #Start of input checks
     if user_input == '1':
         print(f'Total Coins Tracking: {total_coins_tracked}')
+    
     elif user_input == '2':
         printAllCoins()
+    
     elif user_input == '3':
         getAllCoinValues()
+    
     elif user_input == '4':
         getBasicCoinValue()
+    
+    elif user_input == '5':
+        while (coin_id_input != '0'):
+            clear()
+            coin_id_input = input("\nEnter Coin Id from CoinGecko (Press 0 to exit): ")
+            if (coin_id_input != '0'):
+                coin_return = getCoinPrice(coin_id_input)
+                if (coin_return != None):
+                    print(coin_return)
+                input("\nPress Any Key To Continue")
+        
     elif user_input == '0':
         continue
+    
     else:
         print("Invalid Option Idiot")
 
-    input("\nPress Any Key To Continue")
+    if (coin_id_input != '0'):
+        input("\nPress Any Key To Continue")
+    coin_id_input = -1
     clear()
 
 print("\n\n\t\tThank you for choosing SHIEET COIN SCRIPT to keep track of how much you are losing! (L) -- BitByBit\n\n")
