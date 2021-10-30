@@ -1,0 +1,4 @@
+#Follow the format below, otherwise the script won't work properly. 
+#I added my current ShibaZilla info to start, change it to your own values.
+#Index, Date, CoinGeckoID, CoinName, ContractAddress, Network, Exchange, TotalCoins, TotalSpent
+1,October 29 2021,shibazilla,ShibaZilla,0x68810a6f5bb0491cb9ccf8c52735a1acf5f28009,BSC,Metamask,3150104549429110.00,2.00,
