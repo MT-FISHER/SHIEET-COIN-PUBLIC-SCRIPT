@@ -77,7 +77,7 @@ def getTotalValueDifference(total_spent, current_price, total_coins):
 def getValueUpOrDown(total_spent, current_price, total_coins):
     float_total_coins = total_coins.replace(',','')
     current_total_value = format((float(float_total_coins) * float(current_price)),'.3f')
-    return 'UP' if float(current_total_value) > float(total_spent) else 'DOWN!'
+    return 'UP' if float(current_total_value) > float(total_spent) else 'DOWN'
 
 #Will return price difference info of all coins in details
 def getAllCoinValues():
@@ -92,6 +92,23 @@ def getBasicCoinValue():
     for index in range(0,len(list_index)):
         current_price_api = getCoinPrice(coingecko_id[index])
         print(f'{list_index[index]}  {coin_name[index]}  ${total_spent[index]}  ${getCurrentTotalValue(total_coins[index],current_price_api)}  ${getTotalValueDifference(total_spent[index],current_price_api,total_coins[index])}  {getValueUpOrDown(total_spent[index],current_price_api,total_coins[index])}')  
+
+#Print all investment/coins that you are up!
+def getWinners():
+    for index in range(0,len(list_index)):
+        current_price_api = getCoinPrice(coingecko_id[index])
+        winner = getValueUpOrDown(total_spent[index],current_price_api,total_coins[index])
+        if (winner == 'UP'):
+            print(f'{list_index[index]}  {coin_name[index]} UP + ${getTotalValueDifference(total_spent[index],current_price_api,total_coins[index])}')
+
+#Print all investment/coins that you are down!
+def getLosers():
+    for index in range(0,len(list_index)):
+        current_price_api = getCoinPrice(coingecko_id[index])
+        winner = getValueUpOrDown(total_spent[index],current_price_api,total_coins[index])
+        if (winner == 'DOWN'):
+            print(f'{list_index[index]}  {coin_name[index]} DOWN $ {getTotalValueDifference(total_spent[index],current_price_api,total_coins[index])}')
+
 
 def clear():
     # for windows
@@ -108,7 +125,9 @@ def menu():
     print("2 - Get All Coin Info\n")
     print("3 - Get Price Details Of Investment\n")
     print("4 - Get Basic Price Details Of Investment\n")
-    print("5 - Check Coin Price on CoinGecko\n")
+    print("5 - List All Coins That Are Up\n")
+    print("6 - List All Coins That Are Down\n")
+    print("7 - Check Coin Price on CoinGecko\n")
     print("0 - Exit\n")
 
 #---------------------------------------------------------------MAIN----------------------------------------------------------------------------#
@@ -145,6 +164,12 @@ while (user_input != '0'):
         getBasicCoinValue()
     
     elif user_input == '5':
+        getWinners()
+    
+    elif user_input == '6':
+        getLosers()
+    
+    elif user_input == '7':
         while (coin_id_input != '0'):
             clear()
             coin_id_input = input("\nEnter Coin Id from CoinGecko (Press 0 to exit): ")
